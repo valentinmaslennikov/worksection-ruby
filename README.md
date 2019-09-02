@@ -19,7 +19,7 @@ Or install it yourself as:
     $ gem install worksection-ruby
 
 ## Usage
-### API methods: getting data 
+###API methods: getting data 
 Action | Method | Hash Parameters
 -------|--------|-----------
 Returns project names, their statuses (archive, active, pending), company and relative reference to the project. |get_projects|
@@ -30,7 +30,7 @@ Returns the costs incurred for the period, their executor (user_from field), cor
 Returns the text field with user comments|get_comments|
 Returns data about all users in account|get_users|
 
-### API methods: creating projects/tasks/comments
+###API methods: creating projects/tasks/comments
 
 Action | Method | Hash Parameters
 -------|--------|-----------
@@ -40,7 +40,7 @@ Creating a Subtask|post_subtask|
 Placement of time and financial costs in the task or subtask|post_timemoney|
 Inviting user to the account|add_user|
 
-### API methods:  editing projects/tasks/subtasks/tags
+###API methods:  editing projects/tasks/subtasks/tags
 
 Action | Method | Hash Parameters
 -------|--------|-----------
@@ -58,6 +58,136 @@ Delete time and financial costs in the task or subtask|delete_timemoney|
 Subscribe user to a task|subscribe|
 Unsubscribe user from task|unsubscribe|
 Update tags in task/subtask|update_tags|
+
+
+## Usage examples
+
+````ruby
+require "worksection"
+
+DOMAIN_NAME = "<worksection_domain_name>"
+WORKSECTION_KEY = "<worksection_api_key>"
+
+client = Worksection::Client.new(DOMAIN_NAME, WORKSECTION_KEY)
+````
+Here are some common use cases for the Worksection Administrative API (v.05).
+
+### You can list all projects for organization
+````ruby
+puts "#{ JSON.pretty_generate(client.get_projects)}"
+=>
+{
+  "status": "ok",
+  "data": [
+    {
+      "name": "ProjectName0",
+      "page": "/project/61028/",
+      "status": "active",
+      "company": "CompanyName",
+      "user_from": {
+        "email": "john.doe@email.com",
+        "name": "John Doe"
+      },
+      "user_to": {
+        "email": "john.doe@email.com",
+        "name": "John Doe"
+      }
+    },
+    {
+      "name": "ProjectName1",
+      "page": "/project/46167/",
+      "status": "active",
+      "company": "CompanyName",
+      "user_from": {
+        "email": "bob.doe@email.com",
+        "name": "Bob Doe"
+      },
+      "user_to": {
+        "email": "bob.doe@email.com",
+        "name": "Bob Doe"
+      },
+      "max_money": 1950
+    }
+  ]
+}
+
+````
+
+### You can list all tasks for organization
+
+````ruby
+puts "#{ JSON.pretty_generate(client.get_all_tasks)}"
+=>
+{
+  "status": "ok",
+  "data": [
+    {
+      "name": "Task1",
+      "page": "/project/55735/1419268/",
+      "status": "active",
+      "priority": "1",
+      "user_from": {
+        "email": "bob.doe@email.com",
+        "name": "Bob Doe"
+      },
+      "user_to": {
+        "email": "john.doe@email.com",
+        "name": "John Doe"
+      },
+      "date_added": "2019-08-22 17:41",
+      "max_time": 6
+    },
+    {
+      "name": "Task2",
+      "page": "/project/61824/1475984/",
+      "status": "active",
+      "priority": "0",
+      "user_from": {
+        "email": "john.doe@email.com",
+        "name": "John Doe"
+      },
+      "user_to": {
+        "email": "john.doe@email.com",
+        "name": "John Doe"
+      },
+      "date_added": "2019-08-29 18:41"
+    }
+  ]
+}
+
+````
+### You can list all time/costs spend by tasks(for example in period)
+
+````ruby
+puts "#{ JSON.pretty_generate(client.get_timemoney({datestart: '02.08.2019',dateend: '01.09.2019'}))}"
+=>
+{
+  "status": "ok",
+  "data": [
+    {
+      "id": "761252",
+      "task": {
+        "page": "/project/61028/1445772/",
+        "name": "Task1",
+        "status": "active"
+      },
+      "project": {
+        "page": "/project/61028/",
+        "name": "ProjectName1"
+      },
+      "comment": "",
+      "time": "0:18",
+      "money": "0.00",
+      "date": "2019-08-30",
+      "is_timer": false,
+      "user_from": {
+        "email": "john.doe@email.com",
+        "name": "John Doe"
+      }
+    }
+  ]
+}
+````
 
 ## Contributing
 

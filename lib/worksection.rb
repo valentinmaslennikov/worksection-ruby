@@ -1,5 +1,5 @@
 require "worksection/version"
-require "worksection/main"
+require "worksection/client"
 
 module Worksection
   class Error < StandardError; end
