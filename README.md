@@ -19,7 +19,7 @@ Or install it yourself as:
     $ gem install worksection-ruby
 
 ## Usage
-###API methods: getting data 
+### API methods: getting data 
 Action | Method | Hash Parameters
 -------|--------|-----------
 Returns project names, their statuses (archive, active, pending), company and relative reference to the project. |get_projects|
@@ -30,7 +30,7 @@ Returns the costs incurred for the period, their executor (user_from field), cor
 Returns the text field with user comments|get_comments|
 Returns data about all users in account|get_users|
 
-###API methods: creating projects/tasks/comments
+### API methods: creating projects/tasks/comments
 
 Action | Method | Hash Parameters
 -------|--------|-----------
@@ -40,7 +40,7 @@ Creating a Subtask|post_subtask|
 Placement of time and financial costs in the task or subtask|post_timemoney|
 Inviting user to the account|add_user|
 
-###API methods:  editing projects/tasks/subtasks/tags
+### API methods:  editing projects/tasks/subtasks/tags
 
 Action | Method | Hash Parameters
 -------|--------|-----------
